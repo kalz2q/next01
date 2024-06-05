@@ -1,11 +1,29 @@
+"use client";
+import { useState } from "react";
+
+function Header({ title }) {
+  return <h1>{title ? title : "Default title"}</h1>;
+}
+
 export default function Home() {
+  const names = ["Ada Lovelace", "Grace Hopper", "Margaret Hamilton"];
+
+  const [likes, setLikes] = useState(0);
+
+  function handleClick() {
+    setLikes(likes + 1);
+  }
+
   return (
     <div className="min-h-screen">
-      <div className="w-[200px] h-[150px] mx-auto mt-10 bg-slate-300 flex">
-        <div className="w-[calc(100%/3)]   bg-black "></div>
-        <div className="w-[calc(100%/3)]  bg-yellow-300 "></div>
-        <div className="w-[calc(100%/3)]  bg-red-500 "></div>
-      </div>
+      <Header title="Develop. Preview. Ship." />
+      <ul>
+        {names.map((name) => (
+          <li key={name}>{name}</li>
+        ))}
+      </ul>
+
+      <button onClick={handleClick}>Like ({likes})</button>
     </div>
   );
 }
