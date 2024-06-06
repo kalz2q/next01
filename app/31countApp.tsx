@@ -21,18 +21,18 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2">
+    <div className="flex flex-col items-center  min-h-screen py-6">
       <p className="text-xl mb-4">You clicked {count} times</p>
       <div>
         <button
           onClick={() => handleClick("Increment")}
-          className="px-4 py-2 m-2 bg-blue-500 text-white rounded"
+          className="px-4 py-2 m-2 bg-blue-500 text-white text-4xl rounded"
         >
           +
         </button>
         <button
           onClick={() => handleClick("Decrement")}
-          className="px-4 py-2 m-2 bg-red-500 text-white rounded"
+          className="px-4 py-2 m-2 bg-red-500 text-white text-4xl rounded"
         >
           -
         </button>

@@ -1,29 +1,35 @@
 "use client";
-import { useState } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
 
-function Header({ title }) {
-  return <h1>{title ? title : "Default title"}</h1>;
-}
+type Inputs = {
+  example: string;
+  exampleRequired: string;
+};
 
 export default function Home() {
-  const names = ["Ada Lovelace", "Grace Hopper", "Margaret Hamilton"];
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<Inputs>();
 
-  const [likes, setLikes] = useState(0);
+  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
 
-  function handleClick() {
-    setLikes(likes + 1);
-  }
+  //   console.log(watch("example")); // watch input value by passing the name of it
 
   return (
-    <div className="min-h-screen">
-      <Header title="Develop. Preview. Ship." />
-      <ul>
-        {names.map((name) => (
-          <li key={name}>{name}</li>
-        ))}
-      </ul>
+    /* "handleSubmit" will validate your inputs before invoking "onSubmit" */
+    <form onSubmit={handleSubmit(onSubmit)}>
+      {/* register your input into the hook by invoking the "register" function */}
+      <input defaultValue="test" {...register("example")} />
 
-      <button onClick={handleClick}>Like ({likes})</button>
-    </div>
+      {/* include validation with required or other standard HTML validation rules */}
+      <input {...register("exampleRequired", { required: true })} />
+      {/* errors will return when field validation fails  */}
+      {errors.exampleRequired && <span>This field is required</span>}
+
+      <input type="submit" />
+    </form>
   );
 }
