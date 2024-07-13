@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-// utf をオブジェクトにする
 
 export default function Home() {
   const utf = {
@@ -71,70 +70,95 @@ export default function Home() {
     setCurrentAnswer(utf[questions[randomQuizNum]]);
   };
 
-  const handleShowAnseClick = () => {
+  const handleAnswerButtonClick = () => {
     setShowAnswer(true);
   };
 
   const handleNextButtonClick = () => {
-    if (selectedButton === "deletebutton") {
+    if (selectedButton === "leftbutton") {
       const newQuestions = questions.filter((_, index) => index !== quizNum);
       setQuestions(newQuestions);
     }
     setQuiz();
   };
 
-  const handleDeleteButtonClick = () => {
-    const newQuestions = questions.filter((_, index) => index !== quizNum);
-    setQuestions(newQuestions);
-
-    setQuiz();
+  const handleLeftButtonClick = () => {
+    setSelectedButton("leftbutton");
   };
 
-  const handleKeepButtonClick = () => {
-    setQuiz();
+  const handleRightButtonClick = () => {
+    setSelectedButton("rightbutton");
+  };
+
+  const handleResultClick = () => {
+    window.location.reload();
   };
 
   return (
-    <div className="container p-4">
-      <div id="score" className="">
-        <p>
-          問題数 {questions.length} / {Object.keys(utf).length}
-        </p>
-      </div>
+    <div className="container mx-auto p-4">
       <div
         id="question"
         className="bg-red-200 text-blue-400 text-3xl h-24 rounded-lg p-4 mb-4"
-        onClick={handleShowAnseClick}
+        onClick={handleAnswerButtonClick}
       >
         {currentQuestion}
       </div>
+      {/* <div
+        id="answerbutton"
+        className="button bg-blue-400 text-white shadow-md rounded p-4 mb-4 cursor-pointer"
+        onClick={handleAnswerButtonClick}
+      >
+        答えを見る
+      </div> */}
       {showAnswer && (
         <>
           <div
             id="answer"
-            className="bg-orange-200 text-black h-24 rounded-lg
-             p-4 mb-4"
+            className="bg-orange-200 text-black h-24 rounded p-4 mb-4"
           >
             {currentAnswer}
           </div>
-          <div className="buttons flex justify-end">
+          <div className="buttons clearfix flex">
             <div
-              id="deletebutton"
-              className="button  bg-blue-600 text-white shadow-md rounded p-4 mb-4 cursor-pointer "
-              onClick={handleDeleteButtonClick}
+              id="leftbutton"
+              className={`button leftright bg-blue-600 text-white shadow-md rounded p-4 mb-4 cursor-pointer ${
+                selectedButton === "leftbutton" ? "opacity-50" : ""
+              }`}
+              onClick={handleLeftButtonClick}
             >
               削除
             </div>
             <div
               id="rightbutton"
-              className="bg-green-500 text-white shadow-md rounded p-4 mb-4 cursor-pointer ml-2"
-              onClick={handleKeepButtonClick}
+              className={`button leftright bg-green-500 text-white shadow-md rounded p-4 mb-4 cursor-pointer ml-2 ${
+                selectedButton === "rightbutton" ? "opacity-50" : ""
+              }`}
+              onClick={handleRightButtonClick}
             >
               残す
+            </div>
+            <div
+              id="nextbutton"
+              className="button bg-lime-500 text-white shadow-md rounded p-4 mb-4 cursor-pointer ml-auto"
+              onClick={handleNextButtonClick}
+            >
+              次の問題へ
             </div>
           </div>
         </>
       )}
+      <div id="score" className="float-right">
+        <p>
+          問題数 {questions.length} / {Object.keys(utf).length}
+        </p>
+      </div>
+      <div
+        id="result"
+        className="button border-3  absolute  mx-auto bg-blue-800 w-72 rounded p-6 text-center shadow-md transition-all duration-500 ease-out font-bold"
+        onClick={handleResultClick}
+      >
+        もう一度はじめから
+      </div>
     </div>
   );
 }

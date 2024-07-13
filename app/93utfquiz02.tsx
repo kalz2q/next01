@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-// utf をオブジェクトにする
+// 暗記形式にした
 
 export default function Home() {
   const utf = {
